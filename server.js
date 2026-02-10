@@ -1,7 +1,7 @@
 // Imported required dependencies
 const express = require('express');
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 8000;
 
 //import middleware and route handlers
 const cors = require('cors'); // enables cros-origin requests(a way to connect to the frontend)
