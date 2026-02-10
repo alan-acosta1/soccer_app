@@ -45,7 +45,7 @@ exports.getMatchesByDate = async(req,res) =>{
         myCache.set(cacheKey,matches) // adds it to cache
         res.json(matches) // return the data to user
 
-    }catch(err){
+    }catch(error){
         console.error("Can not fetch date",error.message)
         res.status(500).json({error:'Failed to fetch date'})
      }
