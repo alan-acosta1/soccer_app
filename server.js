@@ -1,3 +1,7 @@
+// Loads enviroment variables from .env
+const dotenv = require('dotenv'); 
+dotenv.config();
+
 // Imported required dependencies
 const express = require('express');
 const app = express();
@@ -7,10 +11,6 @@ const port = process.env.PORT || 8000;
 const cors = require('cors'); // enables cros-origin requests(a way to connect to the frontend)
 const matchesRouter = require('./routes/matches'); //routes matches endpoint
 const leaguesRouter = require('./routes/leagues'); //routes leagues endpoint
-
-// Loads enviroment variables from .env
-const dotenv = require('dotenv'); 
-dotenv.config();
 
 //Middleware setup
 app.use(cors());

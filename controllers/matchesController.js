@@ -12,7 +12,7 @@ exports.getLiveMatches = async(req, res) =>{
         }
         // fetches the live matches from the API if no cache is found
         const response = await soccerClient.get('/fixtures', {params:{live: 'all'}});
-
+        console.log('API Response:', response.data);
         const matches = response.data.response // extracts the matches from api response
 
         myCache.set('live-matches',matches) // stores in cache for 60 seconds
@@ -20,11 +20,11 @@ exports.getLiveMatches = async(req, res) =>{
         res.json(matches) // sends the data back to user
         
 
-    } catch(err){
-        console.error("Can not fetch live matches",error.message)
-        res.status(500).json({error:'Failed to fetch live matches'})
-    };
-}
+    } catch(error){
+        console.error('Error:', error.message);
+        res.status(500).json({error: error.message});
+    }
+};
 exports.getMatchesByDate = async(req,res) =>{
     try{
         // Extracts the date feom the URL parameters
