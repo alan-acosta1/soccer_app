@@ -85,3 +85,23 @@ exports.getMatchesByLeague = async(req,res) =>{
     }
 
 }
+// Fetches the next 10 upcoming matches
+exports.getUpcomingMatches = async(req,res) =>{
+    try{
+        const cacheData = myCache.get('upcoming-matches');
+        if(cacheData){
+            res.json(cacheData);
+            return;
+        }
+        const response = await soccerClient.get('/fixtures',{params:{next:10}});
+        const matches = response.data.response;
+        myCache.set('upcoming-matches',matches);
+        res.json(matches)
+
+    }
+    catch(error){
+        console.error("Can not fetch upcoming matches",error.message);
+        res.status(500).json({error:'Can not fetch upcoming matches'})
+    }
+
+}
