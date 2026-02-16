@@ -2,6 +2,7 @@ const soccerClient = require('../config/api.js');
 const myCache = require('../config/cache.js');
 // Fetchs updated squads of a team
 exports.getTeamSquad = async(req,res) => {
+    
     try{
         const teamId = req.params.teamId;
         const cacheKey = `squad-${teamId}`;
@@ -10,7 +11,10 @@ exports.getTeamSquad = async(req,res) => {
             res.json(cacheData);
             return;
         }
-        const response = await soccerClient.get('/teams/squads',{params:{team:teamId}});
+        const response = await soccerClient.get('/players/squads',{params:{team:teamId}});
+        console.log('Full response:', JSON.stringify(response.data.response));
+        console.log('Results:', response.data.results);
+        console.log('Errors:', response.data.errors);
         const squads = response.data.response;
         myCache.set(cacheKey,squads,3600);
         res.json(squads);
