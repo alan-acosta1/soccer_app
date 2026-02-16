@@ -105,3 +105,25 @@ exports.getUpcomingMatches = async(req,res) =>{
     }
 
 }
+
+exports.getFixtureLineup = async(req,res) => {
+    try{
+        const fixtureId = req.params.fixtureId;
+        const cacheKey = `lineup-${fixtureId}`;
+        const cacheData = myCache.get(cacheKey);
+        if(cacheData){
+            res.json(cacheData);
+            return;
+        }
+        const response = await soccerClient.get('/fixtures/lineups',{params:{fixture:fixtureId}});
+        const lineup = response.data.response;
+        myCache.set(cacheKey,lineup, 300);
+        res.json(lineup);
+
+
+    }catch(error){
+        console.error('Can not fetch lineups',error.message);
+        res.status(500).json({error:'Can not fetch lineups'})
+
+    }
+}
