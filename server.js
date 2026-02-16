@@ -11,6 +11,7 @@ const port = process.env.PORT || 8000;
 const cors = require('cors'); // enables cros-origin requests(a way to connect to the frontend)
 const matchesRouter = require('./routes/matches'); //routes matches endpoint
 const leaguesRouter = require('./routes/leagues'); //routes leagues endpoint
+const teamsRouter = require('./routes/teams'); // routes teams endpoint
 
 //Middleware setup
 app.use(cors());
@@ -19,6 +20,7 @@ app.use(express.json());
 //Connecting route handlers to API endpoints
 app.use('/api/matches',matchesRouter);
 app.use('/api/leagues',leaguesRouter);
+app.use('/api/teams',teamsRouter);
 
 // Test route
 app.get('/',(req,res) => {
