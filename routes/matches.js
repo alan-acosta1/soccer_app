@@ -13,6 +13,6 @@ router.get('/date/:date',matchesController.getMatchesByDate);
 router.get('/league/:leagueId',matchesController.getMatchesByLeague);
 router.get('/upcoming',matchesController.getUpcomingMatches);
 router.get('/:fixtureId/lineup',matchesController.getFixtureLineup);
-
+router.get('/:fixtureId/events',matchesController.getFixtureEvents);
 // export router for server.js use
 module.exports = router;

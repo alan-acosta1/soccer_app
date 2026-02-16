@@ -105,7 +105,7 @@ exports.getUpcomingMatches = async(req,res) =>{
     }
 
 }
-
+// Fetches the teams lineup for a match
 exports.getFixtureLineup = async(req,res) => {
     try{
         const fixtureId = req.params.fixtureId;
@@ -124,6 +124,26 @@ exports.getFixtureLineup = async(req,res) => {
     }catch(error){
         console.error('Can not fetch lineups',error.message);
         res.status(500).json({error:'Can not fetch lineups'})
+
+    }
+}
+exports.getFixtureEvents = async(req,res) => {
+    try{
+        const fixtureId = req.params.fixtureId;
+        const cacheKey = `events-${fixtureId}`;
+        const cacheData = myCache.get(cacheKey);
+        if(cacheData){
+            res.json(cacheData);
+            return;
+        }
+        const response = await soccerClient.get('/fixtures/events',{params:{fixture:fixtureId}});
+        const events = response.data.response;
+        myCache.set(cacheKey,events,60);
+        res.json(events);
+
+    }catch(error){
+        console.error('Can not fetch events',error.message);
+        res.status(500).json({error:'Can not fetch events'});
 
     }
 }
