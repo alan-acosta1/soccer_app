@@ -127,6 +127,7 @@ exports.getFixtureLineup = async(req,res) => {
 
     }
 }
+// Fetches real time events of a match
 exports.getFixtureEvents = async(req,res) => {
     try{
         const fixtureId = req.params.fixtureId;
@@ -146,4 +147,25 @@ exports.getFixtureEvents = async(req,res) => {
         res.status(500).json({error:'Can not fetch events'});
 
     }
+}
+// fetches real time statistics during a match
+exports.getFixtureStats = async(req,res) => {
+    try{
+        const fixtureId = req.params.fixtureId;
+        const cacheKey = `stats-${fixtureId}`;
+        const cacheData = myCache.get(cacheKey);
+        if(cacheData){
+            res.json(cacheData);
+            return;
+        }
+        const response = await soccerClient.get('/fixtures/statistics',{params:{fixture:fixtureId}});
+        const stats = response.data.response;
+        myCache.set(cacheKey,stats,60);
+        res.json(stats);
+    }catch(error){
+        console.error('Can not fetch match stats',error.message);
+        res.status(500).json({error:'Can not fetch match stats'});
+
+    }
+
 }

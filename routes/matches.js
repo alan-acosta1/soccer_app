@@ -14,5 +14,6 @@ router.get('/league/:leagueId',matchesController.getMatchesByLeague);
 router.get('/upcoming',matchesController.getUpcomingMatches);
 router.get('/:fixtureId/lineup',matchesController.getFixtureLineup);
 router.get('/:fixtureId/events',matchesController.getFixtureEvents);
+router.get('/:fixtureId/stats',matchesController.getFixtureStats);
 // export router for server.js use
 module.exports = router;
