@@ -13,6 +13,7 @@ const matchesRouter = require('./routes/matches'); //routes matches endpoint
 const leaguesRouter = require('./routes/leagues'); //routes leagues endpoint
 const teamsRouter = require('./routes/teams'); // routes teams endpoint
 const playersRouter = require('./routes/players'); // routes players endpoints
+const transfersRouter = require('./routes/transfer'); // routes transfers endpoints
 
 //Middleware setup
 app.use(cors());
@@ -23,6 +24,7 @@ app.use('/api/matches',matchesRouter);
 app.use('/api/leagues',leaguesRouter);
 app.use('/api/teams',teamsRouter);
 app.use('/api/players', playersRouter);
+app.use('/api/transfers', transfersRouter);
 
 // Test route
 app.get('/',(req,res) => {
