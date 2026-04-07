@@ -170,26 +170,26 @@ function TodayMatches() {
       .finally(() => setLoading(false));
   }, [selected]);
 
-  const PRIORITY_LEAGUES = [
-    "UEFA Champions League",
-    "UEFA Europa League",
-    "Premier League",
-    "La Liga",
-    "Bundesliga",
-    "Serie A",
-    "Ligue 1",
+  const PRIORITY_LEAGUES_IDS = [
+    2, // UCL
+    3, // UEL
+    39, // English Premier League 
+    140, // La Liga
+    78, // Bundesliga
+    135, // Seria A
+    61, // Ligue 1
   ];
 
   const groups = Object.values(
     matches.reduce((acc, m) => {
-      const key = m.league?.name || "Unknown";
-      if (!acc[key]) acc[key] = { name: key, country: m.league?.country || "", matches: [] };
+      const key = m.league?.id ?? m.league?.name ?? "Unknown";
+      if (!acc[key]) acc[key] = {name: m.league?.name || "Unknown", country: m.league?.country || "", matches: []}
       acc[key].matches.push(m);
       return acc;
     }, {})
   ).sort((a, b) => {
-    const ai = PRIORITY_LEAGUES.indexOf(a.name);
-    const bi = PRIORITY_LEAGUES.indexOf(b.name);
+    const ai = PRIORITY_LEAGUES_IDS.indexOf(a.matches[0]?.league?.id);
+    const bi = PRIORITY_LEAGUES_IDS.indexOf(b.matches[0]?.league?.id);
     if (ai === -1 && bi === -1) return 0;
     if (ai === -1) return 1;
     if (bi === -1) return -1;
